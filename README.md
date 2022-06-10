@@ -9,12 +9,12 @@ Kubernetes created from Borg & Omega projects by google as they use it to orches
 Google open-sourced kubernetes at 2014
 
 What is Orchestration Do?
- Configuring and scheduling of containers.
- Provisioning and deployments of containers.
- High Availability of containers.
- Configuration of the applications that run in containers.
- Scaling of containers to equally balance the application workloads across infrastructure.
- Allocation of HW resources between containers.
- Load balancing, traffic routing and service discovery of containers.
- Health monitoring of containers.
- Securing the interactions between containers.
+1. Configuring and scheduling of containers.
+2. Provisioning and deployments of containers.
+3. High Availability of containers.
+4. figuration of the applications that run in containers.
+5. aling of containers to equally balance the application workloads across infrastructure.
+6. location of HW resources between containers.
+7. ad balancing, traffic routing and service discovery of containers.
+8. alth monitoring of containers.
+9. Sucring the interactions between containers and more many.
