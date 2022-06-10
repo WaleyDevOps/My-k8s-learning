@@ -17,4 +17,4 @@ What is Orchestration Do?
 6. location of HW resources between containers.
 7. ad balancing, traffic routing and service discovery of containers.
 8. alth monitoring of containers.
-9. Sucring the interactions between containers and more many.
+9. Securing the interactions between containers and more many.
