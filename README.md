@@ -12,9 +12,9 @@ What is Orchestration Do?
 1. Configuring and scheduling of containers.
 2. Provisioning and deployments of containers.
 3. High Availability of containers.
-4. figuration of the applications that run in containers.
-5. aling of containers to equally balance the application workloads across infrastructure.
-6. location of HW resources between containers.
-7. ad balancing, traffic routing and service discovery of containers.
-8. alth monitoring of containers.
+4. Configuration of the applications that run in containers.
+5. Scaling of containers to equally balance the application workloads across infrastructure.
+6. Location of HW resources between containers.
+7. Add balancing, traffic routing and service discovery of containers.
+8. Health monitoring of containers.
 9. Securing the interactions between containers and more many.
