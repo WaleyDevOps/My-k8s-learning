@@ -1,0 +1,44 @@
+apiVersion: v1                                     # Create Secret object for password
+kind: Secret
+metadata:
+  name: mysqlsecret
+type: Opaque
+stringData:
+  password: P@ssw0rd!
+---
+apiVersion: apps/v1
+kind: Deployment                                  # Deployment
+metadata:
+  name: mysqldeployment
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql                                   # select deployment container (template > metadata > labels)
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:  
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql
+          ports:
+            - containerPort: 3306
+          volumeMounts:                             # VolumeMounts on path and volume name
+            - mountPath: "/var/lib/mysql"
+              name: mysqlvolume                     # which volume to select (volumes > name)
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:                            # get mysql password from secrets
+                secretKeyRef:
+                  name: mysqlsecret
+                  key: password
+      volumes:
+        - name: mysqlvolume                         # name of Volume
+          persistentVolumeClaim:
+            claimName: mysqlclaim                   # chose/select "mysqlclaim" PVC that is defined above.

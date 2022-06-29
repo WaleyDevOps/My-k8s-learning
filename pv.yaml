@@ -1,0 +1,15 @@
+apiVersion: v1                               
+kind: PersistentVolume
+metadata:
+   name: mysqlpv
+   labels:
+     app: mysql                                # labelled PV with "mysql"
+spec:
+  capacity:
+    storage: 5Gi                               # 5Gibibyte = power of 2; 5GB= power of 10
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle      
+  nfs:
+    path: /                                    # binds the path on the NFS Server
+    server: 10.255.255.10                      # IP of NFS Server

@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeaffinitypod1
+spec:
+  containers:
+  - name: nodeaffinity1
+    image: nginx:latest                                     # "requiredDuringSchedulingIgnoredDuringExecution" means
+  affinity:                                                 # Find a node during scheduling according to "matchExpression" and run pod on that node. 
+    nodeAffinity:                                           # If it is not found, do not run this pod until finding specific node "matchExpression".
+      requiredDuringSchedulingIgnoredDuringExecution:       # "...IgnoredDuringExecution" means  
+        nodeSelectorTerms:                                  # after scheduling, if the node label is removed/deleted from node, ignore it while executing. 
+        - matchExpressions:
+          - key: app
+            operator: In                                    # In, NotIn, Exists, DoesNotExist
+            values:                                         # In => key=value,    NotIn => key!=value
+            - production                                    # Exists => only key   
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeaffinitypod2
+spec:
+  containers:
+  - name: nodeaffinity2
+    image: nginx:latest
+  affinity:                                                 # "preferredDuringSchedulingIgnoredDuringExecution" means
+    nodeAffinity:                                           # Find a node during scheduling according to "matchExpression" and run pod on that node. 
+      preferredDuringSchedulingIgnoredDuringExecution:      # If it is not found, run this pod wherever it finds.
+      - weight: 1                                           # if there is a pod with "app=production", run on that pod
+        preference:                                         # if there is NOT a pod with "app=production" and there is NOT any other preference, 
+          matchExpressions:                                 # run this pod wherever scheduler finds a node. 
+          - key: app
+            operator: In
+            values:
+            - production
+      - weight: 2                                           # this is highest prior, weight:2 > weight:1
+        preference:                                         # if there is a pod with "app=test", run on that pod
+          matchExpressions:                                 # if there is NOT a pod with "app=test", goto weight:1 preference
+          - key: app
+            operator: In
+            values:
+            - test
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeaffinitypod3
+spec:
+  containers:
+  - name: nodeaffinity3
+    image: nginx:latest
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: app
+            operator: Exists                                # In, NotIn, Exists, DoesNotExist
